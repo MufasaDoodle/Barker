@@ -1,4 +1,6 @@
 using Barker.Data;
+using Barker.Data.BarkService;
+using Barker.Data.UserService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +30,8 @@ namespace Barker
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IBarkService, BarkService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

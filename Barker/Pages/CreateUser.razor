@@ -1,0 +1,52 @@
+﻿@page "/createuser"
+@using Barker.Models
+@using Barker.Data.UserService
+@inject IUserService UserService
+
+<EditForm Model="@UserToCreate" OnValidSubmit="@OnAddUser">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        Email:<br />
+        <InputText rows="1" @bind-Value="UserToCreate.Email"></InputText>
+    </div>
+    <div class="form-group">
+        Username:<br />
+        <InputText rows="1" @bind-Value="UserToCreate.Username"></InputText>
+    </div>
+    <div class="form-group">
+        Password:<br />
+        <InputText type="password" rows="1" @bind-Value="UserToCreate.Password"></InputText>
+    </div>
+    <div class="form-group">
+        Username:<br />
+        <InputText type="password" rows="1" @bind-Value="passwordConfirm"></InputText>
+    </div>
+    <div class="form-group">
+        Name:<br />
+        <InputText rows="1" @bind-Value="UserToCreate.Name"></InputText>
+    </div>
+    <div class="form-group">
+        Lastname:<br />
+        <InputText rows="1" @bind-Value="UserToCreate.Lastname"></InputText>
+    </div>
+    <div class="form-group">
+        Birthday:<br />
+        <InputDate rows="1" @bind-Value="UserToCreate.Birthday"></InputDate>
+    </div>
+    <p class="actions">
+        <button class="btn btn-outline-dark" type="submit">Register</button>
+    </p>
+</EditForm>
+
+@code {
+    public User UserToCreate = new User();
+    public string passwordConfirm = "";
+
+    private void OnAddUser()
+    {
+        UserToCreate.AccountCreationDate = DateTime.Now;
+        UserService.CreateUserAsync(UserToCreate);
+    }
+}
